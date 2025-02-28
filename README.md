@@ -21,4 +21,4 @@ OptApply is a free, centralized platform designed to help job seekers efficientl
 - **Milestone 3:** TBD
 - **Milestone 4:** TBD
 
-[Placeholder for future setup instruction]
+## [Placeholder for future setup instruction]
