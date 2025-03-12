@@ -3,7 +3,7 @@ import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 
 
-const Signin = () => {
+const SignInPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -70,4 +70,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default SignInPage;
