@@ -1,10 +1,17 @@
+import { useNavigate } from "react-router";
 interface ITableRowProps {
   application: models.application.IApplication
 }
 
 const TableRow: React.FC<ITableRowProps> = ({ application }) => {
+  const navigate = useNavigate()
+
+  const handleRowClick = () => {
+    navigate(`/application/${application.id}`)
+  }
+
   return (
-    <tr className=" hover:bg-gray-50">
+    <tr className=" hover:bg-gray-50 cursor-pointer" onClick={handleRowClick}>
       <td className="p-3">
         <input type="checkbox" />
       </td>
