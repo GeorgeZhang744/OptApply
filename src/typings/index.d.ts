@@ -6,4 +6,9 @@ namespace models {
       exampleVal: number;
     }
   }
+
+  namespace application {
+    // TODO: This is just a template typing. More status should be added when mock data is ready
+    export type IApplicationStatus = "Applied" | "Interviewing" | "Offered" | "Rejected";
+  }
 }
