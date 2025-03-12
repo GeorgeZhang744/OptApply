@@ -2,18 +2,18 @@ import { IconSearch } from "@tabler/icons-react";
 
 import { APPLICATION_STATUS } from "../../config/constants";
 
-type IApplicationStatusFilterOptions = models.application.IApplicationStatus | "All Application";
+type IApplicationStatusFilterOptions = models.application.ApplicationStatus | "All Application";
 
 const filterOptions: IApplicationStatusFilterOptions[] = ["All Application", ...APPLICATION_STATUS];
 
 const ToolBar = () => {
   return (
-    <div className="navbar bg-base-100 shadow-sm ">
+    <div className="navbar ">
       {/* Add, Edit, and Delete Buttons */}
-      <div className="flex-1 space-x-4">
-        <button className="btn btn-ghost text-xl">Add</button>
-        <button className="btn btn-ghost text-xl">Edit</button>
-        <button className="btn btn-ghost text-xl">Delete</button>
+      <div className="flex-1 space-x-2">
+        <button className="btn bg-gray-200 hover:bg-gray-300 text-lg">Add</button>
+        <button className="btn bg-gray-200 hover:bg-gray-300 text-lg">Edit</button>
+        <button className="btn bg-gray-200 hover:bg-gray-300 text-lg">Delete</button>
       </div>
 
       <div className="flex">
@@ -36,7 +36,7 @@ const ToolBar = () => {
             {filterOptions.map((option) => {
               return (
                 <li key={option}>
-                  <button className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-md transition duration-200">
+                  <button className="w-full text-left text-gray-600 font-bold px-4 py-2 hover:bg-gray-100 rounded-md transition duration-200">
                     {option}
                   </button>
                 </li>
