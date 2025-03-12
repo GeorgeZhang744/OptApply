@@ -5,19 +5,19 @@ import NavBar from "./components/NavBar/NavBar";
 import SignInPage from "./pages/SignInPage";
 import MainPage from "./pages/MainPage";
 import SignUpPage from "./pages/SignUpPage";
+import ApplicationDetailPage from "./pages/ApplicationDetailPage";
 
 function App() {
   return (
     <Router>
-      <div className="text-center">
-        <NavBar/>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<SignInPage />} />
-          <Route path="/home" element={<MainPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-        </Routes>
-      </div>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<SignInPage />} />
+        <Route path="/home" element={<MainPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/application/:applicationId" element={<ApplicationDetailPage />} />
+      </Routes>
     </Router>
   );
 }
