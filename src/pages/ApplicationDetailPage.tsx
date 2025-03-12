@@ -25,7 +25,7 @@ const ApplicationDetailPage = () => {
   // TODO: Currently this is only simulating data fetching, need to be replaced with useEffect later
   const application = applications.find((application) => application.id === applicationId);
 
-  return <div className="container w-full mx-auto mt-8">{application && <JobCard application={application} />}</div>;
+  return <div className="container w-full mx-auto mt-24">{application && <JobCard application={application} />}</div>;
 };
 
 export default ApplicationDetailPage;

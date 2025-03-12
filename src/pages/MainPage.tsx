@@ -33,7 +33,7 @@ const MainPage = () => {
   ];
 
   return (
-    <div className="container w-full mx-auto mt-8">
+    <div className="container w-full mx-auto mt-24">
       <ToolBar />
       <ApplicationTable applications={applications} />
     </div>
