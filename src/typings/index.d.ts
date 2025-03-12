@@ -39,7 +39,7 @@ namespace models {
       salary: ISalaryRange;
       skillsRequired: string[];
       jobDescription: string;
-      note?: string;
+      note: string;
     }
   }
 }

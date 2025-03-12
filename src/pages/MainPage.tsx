@@ -2,7 +2,7 @@ import ToolBar from "../components/ToolBar/ToolBar";
 import ApplicationTable from "../components/ApplicationTable/ApplicationTable";
 
 const MainPage = () => {
-  // Temp mock data
+  // TODO: Temp mock data, remove afterwards
   const applications: models.application.IApplication[] = [
     {
       id: "1",
@@ -15,6 +15,7 @@ const MainPage = () => {
       salary: { min: 80000, max: 100000 },
       skillsRequired: ["HTML", "CSS", "React"],
       jobDescription: "Frontend development",
+      note: "",
     },
     {
       id: "2",
@@ -27,13 +28,14 @@ const MainPage = () => {
       salary: { min: 80000, max: 100000 },
       skillsRequired: ["HTML", "CSS", "React"],
       jobDescription: "Frontend development",
+      note: "",
     },
   ];
 
   return (
     <div className="container w-full mx-auto mt-8">
       <ToolBar />
-      <ApplicationTable applications={applications}/>
+      <ApplicationTable applications={applications} />
     </div>
   );
 };
