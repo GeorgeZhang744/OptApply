@@ -9,15 +9,13 @@ import SignUpPage from "./pages/SignUpPage";
 function App() {
   return (
     <Router>
-      <div className="text-center">
-        <NavBar/>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<SignInPage />} />
-          <Route path="/home" element={<MainPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-        </Routes>
-      </div>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<SignInPage />} />
+        <Route path="/home" element={<MainPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+      </Routes>
     </Router>
   );
 }
