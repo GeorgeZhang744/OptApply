@@ -1,8 +1,9 @@
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
+import { IApplication } from "../../data/mockdata";
 
 type IApplicationTableProps = {
-  applications: models.application.IApplication[];
+  applications: IApplication[];
 };
 
 const ApplicationTable: React.FC<IApplicationTableProps> = ({ applications }) => {

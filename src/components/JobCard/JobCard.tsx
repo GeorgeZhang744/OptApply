@@ -2,9 +2,10 @@ import { IconX } from "@tabler/icons-react";
 import { Link} from "react-router";
 
 import { formatSalary } from "../../utils/applicationDataProcessing";
+import {IApplication} from "../../data/mockdata";
 
 interface IJobCardProps {
-  application: models.application.IApplication;
+  application: IApplication;
 }
 
 const JobCard: React.FC<IJobCardProps> = ({ application }) => {

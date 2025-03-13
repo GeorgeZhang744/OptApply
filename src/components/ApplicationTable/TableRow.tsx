@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router";
+import { IApplication } from "../../data/mockdata";
+
 interface ITableRowProps {
-  application: models.application.IApplication
+  application: IApplication;
 }
 
 const TableRow: React.FC<ITableRowProps> = ({ application }) => {
