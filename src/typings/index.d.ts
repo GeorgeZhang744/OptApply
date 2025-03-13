@@ -32,7 +32,7 @@ namespace models {
       id: string;
       company: string;
       position: string;
-      ApplicationUrl: string;
+      applicationUrl: string;
       deadline: Date;
       workLocation: WorkLocation;
       status: ApplicationStatus;

@@ -33,8 +33,8 @@ const JobCard: React.FC<IJobCardProps> = ({ application }) => {
         </p>
         <p>
           <strong>Application Link:</strong>{" "}
-          <a href={application.ApplicationUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-            {application.ApplicationUrl}
+          <a href={application.applicationUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+            {application.applicationUrl}
           </a>
         </p>
         <p>

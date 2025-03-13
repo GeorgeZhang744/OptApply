@@ -1,31 +1,28 @@
+import {useEffect, useState} from "react";
 import { useParams } from "react-router";
-
+import {mockApplications} from "../data/mockdata";
 import JobCard from "../components/JobCard/JobCard";
 
 const ApplicationDetailPage = () => {
-  // TODO: Temp mock data, pretending the data being fetched remove afterward
-  const applications: models.application.IApplication[] = [
-    {
-      id: "1",
-      company: "C1",
-      position: "Web Dev",
-      ApplicationUrl: "https://job.com/1",
-      deadline: new Date("2025-10-05"),
-      workLocation: "Remote",
-      status: "Applied",
-      salary: { min: 80000, max: 100000 },
-      skillsRequired: ["HTML", "CSS", "React"],
-      jobDescription: "Frontend development",
-      note: "",
-    },
-  ];
-
   const { applicationId } = useParams();
+  const [application, setApplication] = useState<models.application.IApplication | null>(null);
 
-  // TODO: Currently this is only simulating data fetching, need to be replaced with useEffect later
-  const application = applications.find((application) => application.id === applicationId);
+  useEffect(()=>{
+    const fetchApplication = async()=>{
+      const foundApplication = mockApplications.find((app) => app.id === applicationId) || null;
+      
+      //simulate API call delay
+      setTimeout(()=> setApplication(foundApplication),500);
+    };
 
-  return <div className="container w-full mx-auto mt-24">{application && <JobCard application={application} />}</div>;
+    fetchApplication();
+  }, [applicationId]); 
+
+  return (
+    <div className="container w-full mx-auto mt-24">
+      {application ? <JobCard application={application}/> : <p>Loading...</p>}
+    </div>
+  );
 };
 
 export default ApplicationDetailPage;

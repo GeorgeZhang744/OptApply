@@ -1,41 +1,27 @@
 import ToolBar from "../components/ToolBar/ToolBar";
 import ApplicationTable from "../components/ApplicationTable/ApplicationTable";
+import {useEffect, useState} from "react";
+import {mockApplications} from "../data/mockdata";
 
 const MainPage = () => {
-  // TODO: Temp mock data, remove afterwards
-  const applications: models.application.IApplication[] = [
-    {
-      id: "1",
-      company: "C1",
-      position: "Web Dev",
-      ApplicationUrl: "https://job.com/1",
-      deadline: new Date("2025-10-05"),
-      workLocation: "Remote",
-      status: "Applied",
-      salary: { min: 80000, max: 100000 },
-      skillsRequired: ["HTML", "CSS", "React"],
-      jobDescription: "Frontend development",
-      note: "",
-    },
-    {
-      id: "2",
-      company: "C2",
-      position: "Web Dev",
-      ApplicationUrl: "https://job.com/1",
-      deadline: new Date("2025-10-05"),
-      workLocation: "Remote",
-      status: "Applied",
-      salary: { min: 80000, max: 100000 },
-      skillsRequired: ["HTML", "CSS", "React"],
-      jobDescription: "Frontend development",
-      note: "",
-    },
-  ];
+  const [applications, setApplications] = useState<models.application.IApplication[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(()=>{
+    const fetchApplication = async()=>{
+      setTimeout(()=>{
+        setApplications(mockApplications);
+        setLoading(false);
+      }, 500);
+    };
+
+    fetchApplication();
+  }, []);
 
   return (
     <div className="container w-full mx-auto mt-24">
       <ToolBar />
-      <ApplicationTable applications={applications} />
+      {loading ? <p>Loading...</p> : <ApplicationTable applications={applications}/>}
     </div>
   );
 };
