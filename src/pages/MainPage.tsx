@@ -1,10 +1,10 @@
 import ToolBar from "../components/ToolBar/ToolBar";
 import ApplicationTable from "../components/ApplicationTable/ApplicationTable";
 import {useEffect, useState} from "react";
-import {mockApplications, IApplication} from "../data/mockdata";
+import {mockApplications} from "../data/mockdata";
 
 const MainPage = () => {
-  const [applications, setApplications] = useState<IApplication[]>([]);
+  const [applications, setApplications] = useState<models.application.IApplication[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(()=>{

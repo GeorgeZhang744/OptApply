@@ -1,24 +1,10 @@
-export interface IApplication {
-  id: string;
-  company: string;
-  position: string;
-  ApplicationUrl: string;
-  deadline: Date;
-  workLocation: string;
-  status: string;
-  salary: {min: number; max: number};
-  skillsRequired: string[];
-  jobDescription: string;
-  note: string;
-}
-
 //mock applications
-export const mockApplications: IApplication[] = [
+export const mockApplications: models.application.IApplication[] = [
   {
     id: "1",
     company: "C1",
     position: "Web Dev",
-    ApplicationUrl: "https://job.com/1",
+    applicationUrl: "https://job.com/1",
     deadline: new Date("2025-10-05"),
     workLocation: "Remote",
     status: "Applied",
@@ -31,11 +17,11 @@ export const mockApplications: IApplication[] = [
     id: "2",
     company: "C2",
     position: "Backend Dev",
-    ApplicationUrl: "https://job.com/2",
+    applicationUrl: "https://job.com/2",
     deadline: new Date("2025-11-10"),
     workLocation: "Hybrid",
-    status: "Interview Scheduled",
-    salary: { min: 90000, max: 110000 },
+    status: "Interviewing",
+    salary: { fixed: 100000},
     skillsRequired: ["Node.js", "Express", "MongoDB"],
     jobDescription: "Backend API development",
     note: "Need to prepare for system design interview",
@@ -44,10 +30,10 @@ export const mockApplications: IApplication[] = [
     id: "3",
     company: "C3",
     position: "Full Stack Engineer",
-    ApplicationUrl: "https://job.com/3",
+    applicationUrl: "https://job.com/3",
     deadline: new Date("2025-12-01"),
-    workLocation: "Onsite",
-    status: "Offer Received",
+    workLocation: "On-site",
+    status: "Offered",
     salary: { min: 95000, max: 120000 },
     skillsRequired: ["React", "Node.js", "PostgreSQL"],
     jobDescription: "Developing full-stack applications",
@@ -57,11 +43,11 @@ export const mockApplications: IApplication[] = [
     id: "4",
     company: "C4",
     position: "Data Analyst",
-    ApplicationUrl: "https://job.com/4",
+    applicationUrl: "https://job.com/4",
     deadline: new Date("2025-11-01"),
-    workLocation: "Onsite",
-    status: "Interview Scheduled",
-    salary: {min:90000, max: 110000},
+    workLocation: "On-site",
+    status: "Rejected",
+    salary: {max: 110000},
     skillsRequired: ["SQL", "R", "Python"],
     jobDescription: "Organizing and interpreting data",
     note: "",

@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router";
-import { IApplication } from "../../data/mockdata";
 
 interface ITableRowProps {
-  application: IApplication;
+  application: models.application.IApplication;
 }
 
 const TableRow: React.FC<ITableRowProps> = ({ application }) => {
@@ -20,8 +19,8 @@ const TableRow: React.FC<ITableRowProps> = ({ application }) => {
       <td className="p-3">{application.company}</td>
       <td className="p-3">{application.position}</td>
       <td className="p-3 text-blue-500">
-        <a href={application.ApplicationUrl} target="_blank" rel="noopener noreferrer">
-          {application.ApplicationUrl}
+        <a href={application.applicationUrl} target="_blank" rel="noopener noreferrer">
+          {application.applicationUrl}
         </a>
       </td>
       <td className="p-3">{application.deadline.toLocaleDateString()}</td>
