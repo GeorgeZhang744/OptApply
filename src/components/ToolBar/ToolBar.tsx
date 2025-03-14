@@ -32,7 +32,7 @@ const ToolBar = () => {
           </div>
 
           {/* Filter Options */}
-          <ul tabIndex={0} className="menu dropdown-content bg-neutral rounded-md shadow-md mt-2 w-52 z-50 border border-secondary">
+          <ul tabIndex={0} className="menu dropdown-content bg-neutral text-neutral-content rounded-md shadow-md mt-2 w-52 z-50 border border-secondary">
             {filterOptions.map((option) => {
               return (
                 <li key={option}>

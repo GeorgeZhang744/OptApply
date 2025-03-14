@@ -23,7 +23,7 @@ const SignInPage = () => {
       </div>
 
       
-      <div className="bg-neutral p-8 shadow-md rounded-lg w-full max-w-md">
+      <div className="bg-neutral text-neutral-content p-8 shadow-md rounded-lg w-full max-w-md">
         <h2 className="text-2xl font-semibold text-center mb-4">Sign In</h2>
 
         
@@ -33,7 +33,7 @@ const SignInPage = () => {
             <label className="flex justify-start text-sm font-medium">Email</label>
             <input
               type="email"
-              className="input input-bordered w-full mt-1"
+              className="input text-base-content input-bordered w-full mt-1"
               value={email}
               onChange={email => setEmail(email.target.value)}
               placeholder="Enter Email"
@@ -46,7 +46,7 @@ const SignInPage = () => {
             <label className="flex justify-start text-sm font-medium">Password</label>
             <input
               type="password"
-              className="input input-bordered w-full mt-1"
+              className="input text-base-content input-bordered w-full mt-1"
               value={password}
               onChange={password => setPassword(password.target.value)}
               placeholder="Enter Password"
