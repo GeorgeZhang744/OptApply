@@ -10,7 +10,7 @@ interface IJobCardProps {
 const JobCard: React.FC<IJobCardProps> = ({ application }) => {
   return (
     // TODO: add more styling to make it look better
-    <div className="border border-secondary rounded-lg shadow-sm p-5 bg-neutral space-y-2 w-full">
+    <div className="border border-secondary rounded-lg shadow-sm p-5 bg-neutral text-neutral-content space-y-2 w-full">
       <div className="flex justify-between items-center">
         {/* Position name and application status */}
         <div className="flex space-x-2">

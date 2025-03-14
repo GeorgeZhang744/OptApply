@@ -12,7 +12,7 @@ const TableRow: React.FC<ITableRowProps> = ({ application }) => {
   }
 
   return (
-    <tr className=" hover:bg-accent hover:text-accent-content cursor-pointer" onClick={handleRowClick}>
+    <tr className="text-neutral-content hover:bg-accent hover:text-accent-content cursor-pointer" onClick={handleRowClick}>
       <td className="p-3">
         <input type="checkbox" className="checkbox checkbox-secondary" />
       </td>
