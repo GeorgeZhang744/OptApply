@@ -12,13 +12,13 @@ const TableRow: React.FC<ITableRowProps> = ({ application }) => {
   }
 
   return (
-    <tr className=" hover:bg-gray-50 cursor-pointer" onClick={handleRowClick}>
+    <tr className="text-neutral-content hover:bg-accent hover:text-accent-content cursor-pointer" onClick={handleRowClick}>
       <td className="p-3">
-        <input type="checkbox" />
+        <input type="checkbox" className="checkbox checkbox-secondary" />
       </td>
       <td className="p-3">{application.company}</td>
       <td className="p-3">{application.position}</td>
-      <td className="p-3 text-blue-500">
+      <td className="p-3 text-info">
         <a href={application.applicationUrl} target="_blank" rel="noopener noreferrer">
           {application.applicationUrl}
         </a>

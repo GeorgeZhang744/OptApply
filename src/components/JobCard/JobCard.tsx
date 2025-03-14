@@ -10,30 +10,30 @@ interface IJobCardProps {
 const JobCard: React.FC<IJobCardProps> = ({ application }) => {
   return (
     // TODO: add more styling to make it look better
-    <div className="border border-gray-200 rounded-lg shadow-sm p-5 bg-white space-y-2 w-full">
+    <div className="border border-secondary rounded-lg shadow-sm p-5 bg-neutral text-neutral-content space-y-2 w-full">
       <div className="flex justify-between items-center">
         {/* Position name and application status */}
         <div className="flex space-x-2">
           <h2 className="text-xl font-semibold">{application.position}</h2>
-          <span className="text-sm px-3 py-1 bg-gray-100 rounded-sm">{application.status}</span>
+          <span className="text-sm px-3 py-1 rounded-sm">{application.status}</span>
         </div>
 
         {/* Exit Button */}
         <Link to="/home">
-          <button className="btn btn-ghost">
+          <button className="btn btn-error btn-ghost">
             <IconX stroke={2} />
           </button>
         </Link>
       </div>
 
       {/* Rest of application data */}
-      <div className="text-gray-700 text-sm">
+      <div className="text-sm">
         <p>
           <strong>Company:</strong> {application.company}
         </p>
         <p>
           <strong>Application Link:</strong>{" "}
-          <a href={application.applicationUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+          <a href={application.applicationUrl} target="_blank" rel="noopener noreferrer" className="text-info underline">
             {application.applicationUrl}
           </a>
         </p>

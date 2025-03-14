@@ -1,6 +1,6 @@
 const TableHeader = () => {
   return (
-    <thead className="bg-gray-100 text-gray-800 text-sm font-semibold">
+    <thead className="bg-secondary text-secondary-content font-semibold">
       <tr>
         <th className="p-3"></th>
         <th className="p-3">Company</th>
