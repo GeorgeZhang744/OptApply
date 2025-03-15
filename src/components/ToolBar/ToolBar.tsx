@@ -2,9 +2,14 @@ import { IconSearch } from "@tabler/icons-react";
 
 import { APPLICATION_STATUS } from "../../config/constants";
 
-type IApplicationStatusFilterOptions = models.application.ApplicationStatus | "All Application";
+type IApplicationStatusFilterOptions =
+  | models.application.ApplicationStatus
+  | "All Application";
 
-const filterOptions: IApplicationStatusFilterOptions[] = ["All Application", ...APPLICATION_STATUS];
+const filterOptions: IApplicationStatusFilterOptions[] = [
+  "All Application",
+  ...APPLICATION_STATUS,
+];
 
 const ToolBar = () => {
   return (
@@ -18,7 +23,11 @@ const ToolBar = () => {
 
       <div className="flex">
         {/* Search Bar */}
-        <input type="text" placeholder="Search" className="input input-secondary input-bordered w-64 md:w-96" />
+        <input
+          type="text"
+          placeholder="Search"
+          className="input input-secondary bg-neutral text-neutral-content input-bordered w-64 md:w-96"
+        />
 
         {/* Search Button */}
         <button className="btn btn-secondary">
@@ -27,12 +36,19 @@ const ToolBar = () => {
 
         {/* Filter Button */}
         <div className="dropdown dropdown-end ml-2">
-          <div tabIndex={0} role="button" className="btn text-lg btn-secondary rounded-md px-4">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn text-lg btn-secondary rounded-md px-4"
+          >
             Filter ▾
           </div>
 
           {/* Filter Options */}
-          <ul tabIndex={0} className="menu dropdown-content bg-neutral text-neutral-content rounded-md shadow-md mt-2 w-52 z-50 border border-secondary">
+          <ul
+            tabIndex={0}
+            className="menu dropdown-content bg-neutral text-neutral-content rounded-md shadow-md mt-2 w-52 z-50 border border-secondary"
+          >
             {filterOptions.map((option) => {
               return (
                 <li key={option}>

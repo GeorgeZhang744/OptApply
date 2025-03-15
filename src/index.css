@@ -1,4 +1,16 @@
 @import "tailwindcss";
- @plugin "daisyui" {
-   themes: light --default;
- }
+@plugin "daisyui" {
+  themes: nord --default;
+}
+
+/* Some light options */
+
+/* bumblebee */
+/* autumn */
+/* nord */
+
+/* Some dark options */
+
+/* dracula */
+/* business */
+/* night */
