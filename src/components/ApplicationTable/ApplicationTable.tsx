@@ -5,10 +5,12 @@ type IApplicationTableProps = {
   applications: models.application.IApplication[];
 };
 
-const ApplicationTable: React.FC<IApplicationTableProps> = ({ applications }) => {
+const ApplicationTable: React.FC<IApplicationTableProps> = ({
+  applications,
+}) => {
   return (
-    <div className="overflow-x-auto rounded-lg bg-white border border-gray-200 mt-2">
-      <table className="table w-full text-sm text-left text-gray-700">
+    <div className="overflow-x-auto rounded-lg bg-neutral border border-secondary mt-2">
+      <table className="table w-full text-sm text-left">
         <TableHeader />
 
         {/* Table Content */}
