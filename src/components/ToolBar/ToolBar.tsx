@@ -7,11 +7,12 @@ import { APPLICATION_STATUS } from "../../config/constants";
 interface IToolBarProps {
   setFilterOption: (option: models.application.ApplicationStatusFilterOptions) => void;
   setSearchQuery: (query: string) => void;
+  handleDelete: () => void;
 }
 
 const filterOptions: models.application.ApplicationStatusFilterOptions[] = ["All Application", ...APPLICATION_STATUS];
 
-const ToolBar: React.FC<IToolBarProps> = ({ setFilterOption, setSearchQuery }) => {
+const ToolBar: React.FC<IToolBarProps> = ({ setFilterOption, setSearchQuery, handleDelete }) => {
   const [localSearchQuery, setLocalSearchQuery] = useState("");
 
   const handleFilterChange = (option: models.application.ApplicationStatusFilterOptions) => {
@@ -30,9 +31,12 @@ const ToolBar: React.FC<IToolBarProps> = ({ setFilterOption, setSearchQuery }) =
     <div className="navbar ">
       {/* Add, Edit, and Delete Buttons */}
       <div className="flex-1 space-x-2">
-        <Link to="/add" className="btn btn-secondary text-lg">Add</Link>
-        <button className="btn btn-secondary text-lg">Edit</button>
-        <button className="btn btn-secondary text-lg">Delete</button>
+        <Link to="/add" className="btn btn-secondary text-lg">
+          Add
+        </Link>
+        <button className="btn btn-secondary text-lg" onClick={handleDelete}>
+          Delete
+        </button>
       </div>
 
       <div className="flex">

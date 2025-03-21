@@ -8,6 +8,8 @@ const MainPage = () => {
   const [loading, setLoading] = useState(true);
   const [filterOption, setFilterOption] = useState<models.application.ApplicationStatusFilterOptions>("All Application");
   const [searchQuery, setSearchQuery] = useState("");
+  // State for a set that stores the application IDs of the applications that are selected
+  const [selectedApplications, setSelectedApplications] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const fetchApplication = async () => {
@@ -20,6 +22,23 @@ const MainPage = () => {
     fetchApplication();
   }, []);
 
+  const toggleApplicationSelection = (applicationId: string) => {
+    setSelectedApplications((prevSelected) => {
+      const newSelected = new Set(prevSelected);
+      if (newSelected.has(applicationId)) {
+        newSelected.delete(applicationId);
+      } else {
+        newSelected.add(applicationId);
+      }
+      return newSelected;
+    });
+  };
+
+  const handleDelete = () => {
+    // TODO: This is place holder function for deleting feature. Implement actual delete logic here
+    console.log("Selected Application IDs:", Array.from(selectedApplications));
+  };
+
   const filteredApplications = applications.filter((application: models.application.IApplication) => {
     const matchesFilter = filterOption === "All Application" || application.status === filterOption;
     const matchesSearch = application.company.toLowerCase().includes(searchQuery.toLowerCase());
@@ -28,8 +47,16 @@ const MainPage = () => {
 
   return (
     <div className="container w-full mx-auto mt-24">
-      <ToolBar setFilterOption={setFilterOption} setSearchQuery={setSearchQuery} />
-      {loading ? <p>Loading...</p> : <ApplicationTable applications={filteredApplications} />}
+      <ToolBar setFilterOption={setFilterOption} setSearchQuery={setSearchQuery} handleDelete={handleDelete} />
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <ApplicationTable
+          applications={filteredApplications}
+          selectedApplications={selectedApplications}
+          toggleApplicationSelection={toggleApplicationSelection}
+        />
+      )}
     </div>
   );
 };
