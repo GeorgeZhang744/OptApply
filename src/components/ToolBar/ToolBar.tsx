@@ -1,5 +1,6 @@
 import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { APPLICATION_STATUS } from "../../config/constants";
 
@@ -29,7 +30,7 @@ const ToolBar: React.FC<IToolBarProps> = ({ setFilterOption, setSearchQuery }) =
     <div className="navbar ">
       {/* Add, Edit, and Delete Buttons */}
       <div className="flex-1 space-x-2">
-        <button className="btn btn-secondary text-lg">Add</button>
+        <Link to="/add" className="btn btn-secondary text-lg">Add</Link>
         <button className="btn btn-secondary text-lg">Edit</button>
         <button className="btn btn-secondary text-lg">Delete</button>
       </div>
