@@ -7,6 +7,7 @@ import MainPage from "./pages/MainPage";
 import SignUpPage from "./pages/SignUpPage";
 import ApplicationDetailPage from "./pages/ApplicationDetailPage";
 import AddApplicationPage from "./pages/AddApplicationPage";
+import EditApplicationPage from "./pages/EditApplicationPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/home" element={<MainPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/add" element={<AddApplicationPage />} />
+        <Route path="/edit/:applicationId" element={<EditApplicationPage />} />
         <Route path="/application/:applicationId" element={<ApplicationDetailPage />} />
       </Routes>
     </Router>
