@@ -40,8 +40,12 @@ const MainPage = () => {
   };
 
   const filteredApplications = applications.filter((application: models.application.IApplication) => {
+    const searchHelper = (searchField: string) => {
+      return searchField.toLowerCase().includes(searchQuery.toLowerCase());
+    };
+
     const matchesFilter = filterOption === "All Application" || application.status === filterOption;
-    const matchesSearch = application.company.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = searchHelper(application.company) || searchHelper(application.position);
     return matchesFilter && matchesSearch;
   });
 
