@@ -8,6 +8,7 @@ import SignUpPage from "./pages/SignUpPage";
 import ApplicationDetailPage from "./pages/ApplicationDetailPage";
 import AddApplicationPage from "./pages/AddApplicationPage";
 import EditApplicationPage from "./pages/EditApplicationPage";
+import CalendarModal from "./components/Calendar/Calendar";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/edit/:applicationId" element={<EditApplicationPage />} />
         <Route path="/application/:applicationId" element={<ApplicationDetailPage />} />
       </Routes>
+      <CalendarModal />
     </Router>
   );
 }

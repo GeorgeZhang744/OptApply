@@ -26,7 +26,7 @@ const NavBar = () => {
       <div className="ml-auto flex space-x-3">
         {loggedIn ? (
           <div className="ml-auto flex space-x-3 items-center">
-            <FaCalendar size={30}/>
+            <FaCalendar size={30} onClick={() => document.getElementById('calendarModal')!.showModal()} className="cursor-pointer" />
             <Link to="/">
               <button className="btn btn-error btn-sm btn-soft">Sign Out</button>
             </Link>
