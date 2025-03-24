@@ -5,7 +5,7 @@ const NavBar = () => {
   const curLocation = useLocation();
   const loggedIn = curLocation.pathname == "/home";
   return (
-    <nav className="navbar bg-primary px-6 py-3 fixed top-0 left-0 w-full shadow-md flex items-center">
+    <nav className="navbar bg-primary px-6 py-3 fixed top-0 left-0 w-full shadow-md flex items-center z-50">
       <Link to="/">
         <div className="flex items-center space-x-2">
           <img src={logo} alt="OptApply Logo" className="w-10 h-10" />

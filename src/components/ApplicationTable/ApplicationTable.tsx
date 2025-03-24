@@ -1,12 +1,17 @@
+import React from "react";
 import TableHeader from "./TableHeader";
 import TableRow from "./TableRow";
 
 type IApplicationTableProps = {
   applications: models.application.IApplication[];
+  selectedApplications: Set<string>;
+  toggleApplicationSelection: (applicationId: string) => void;
 };
 
 const ApplicationTable: React.FC<IApplicationTableProps> = ({
   applications,
+  selectedApplications,
+  toggleApplicationSelection,
 }) => {
   return (
     <div className="overflow-x-auto rounded-lg bg-neutral border border-secondary mt-2">
@@ -16,7 +21,12 @@ const ApplicationTable: React.FC<IApplicationTableProps> = ({
         {/* Table Content */}
         <tbody>
           {applications.map((application) => (
-            <TableRow key={application.id} application={application} />
+            <TableRow
+              key={application.id}
+              application={application}
+              isChecked={selectedApplications.has(application.id.toString())}
+              toggleSelection={() => toggleApplicationSelection(application.id.toString())}
+            />
           ))}
         </tbody>
       </table>
