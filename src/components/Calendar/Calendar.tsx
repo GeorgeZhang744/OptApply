@@ -1,6 +1,8 @@
 import Calendar from 'react-calendar';
 import { useState } from 'react';
 import { mockApplications } from '../../data/mockdata';
+import { Link } from "react-router-dom";
+
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -21,6 +23,16 @@ const CalendarModal = () => {
                 deadlineDate.getFullYear() === date.getFullYear() &&
                 deadlineDate.getMonth() === date.getMonth() &&
                 deadlineDate.getDate() === date.getDate()
+            );
+        });
+      };
+
+      const monthWithDeadline = (date: Date) => {
+        return mockApplications.some(app => {
+            const deadline = new Date(app.deadline);
+            return (
+                deadline.getFullYear() === date.getFullYear() &&
+                deadline.getMonth() === date.getMonth()
             );
         });
       };
@@ -53,13 +65,24 @@ const CalendarModal = () => {
                             value={selectedDay}
                             className="react-calendar"
                             minDetail="year"
-                            tileContent={({ date, view }) =>
-                                view === "month" && hasDeadline(date) ? (
-                                <div className="flex justify-center items-center mt-1">
-                                    <div className="w-2 h-2 rounded-full bg-red-500" />
-                                </div>
-                                ) : null
-                            }
+                            tileContent={({ date, view }) => {
+                                if (view === "month" && hasDeadline(date)) {
+                                    return (
+                                        <div className="flex justify-center items-center mt-1">
+                                            <div className="w-2 h-2 rounded-full bg-red-500" />
+                                        </div>
+                                    );
+                                  }
+                                  if (view === "year" && monthWithDeadline(date)) {
+                                    return (
+                                        <div className="flex justify-center items-center mt-1">
+                                            <div className="w-2 h-2 rounded-full bg-red-500" />
+                                        </div>
+                                    );
+                                  }
+                              
+                                  return null;
+                                }}
                             onClickDay={handleDayClick}
                         />
                     </div>
@@ -83,13 +106,21 @@ const CalendarModal = () => {
                             <p><strong>Position:</strong> {job.position}</p>
                             <p><strong>Description:</strong> {job.jobDescription}</p>
                             <p><strong>Status:</strong> {job.status}</p>
+                            <Link
+                                to={`/application/${job.id}`}
+                                onClick={() => {
+                                    setApplicationModalOpen(false);
+                                    setCalendarModalOpen(true);
+                                }}
+                            >
+                                <strong className="underline">View More</strong>
+                            </Link>
                         </div>
                     ))}
 
                     <div className="modal-action mt-4">
                         <button className="btn btn-primary btn-sm" onClick={() => {
-                            setApplicationModalOpen(false);
-                            setCalendarModalOpen(true);
+                            
                         }}>Close</button>
                     </div>
                 </div>
