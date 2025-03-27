@@ -52,6 +52,7 @@ const CalendarModal = () => {
                             onChange={onChange}
                             value={selectedDay}
                             className="react-calendar"
+                            minDetail="year"
                             tileContent={({ date, view }) =>
                                 view === "month" && hasDeadline(date) ? (
                                 <div className="flex justify-center items-center mt-1">
@@ -79,7 +80,8 @@ const CalendarModal = () => {
                     {selectedJobs.map((job, index) => (
                         <div key={index} className="border-b py-2">
                             <p><strong>Company:</strong> {job.company}</p>
-                            <p><strong>Position:</strong> {job.jobDescription}</p>
+                            <p><strong>Position:</strong> {job.position}</p>
+                            <p><strong>Description:</strong> {job.jobDescription}</p>
                             <p><strong>Status:</strong> {job.status}</p>
                         </div>
                     ))}
