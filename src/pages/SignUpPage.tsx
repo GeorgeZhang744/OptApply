@@ -1,6 +1,8 @@
 import { useState } from "react";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
+import {mockUsers} from "../data/signupData";
+
 
 
 const SignUpPage = () => {
@@ -8,7 +10,8 @@ const SignUpPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
+  const [isError, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const passwordsMatch = (password === password2);
 
@@ -16,9 +19,27 @@ const SignUpPage = () => {
     login.preventDefault();
     if (!passwordsMatch) {
       console.error("Passwords do not match!");
-      setPasswordError(true);
+      setError(true);
+      setErrorMessage("Passwords do not match!")
       return;
     }
+
+    const emailExists = mockUsers.some(user => user.email === email);
+
+    if (emailExists) {
+      console.error("Email already exists");
+      setErrorMessage("Email already in use");
+      setError(true);
+      return;
+    }
+
+    const newUser = {
+      id: mockUsers.length + 1,
+      email,
+      password,
+    };
+    mockUsers.push(newUser);
+
     navigate("/home");
     console.log("Email: ", email);
     console.log("Password: ", password);
@@ -34,8 +55,8 @@ const SignUpPage = () => {
       
       <div className="bg-neutral text-neutral-content p-8 shadow-md rounded-lg w-full max-w-md">
         <h2 className="text-2xl font-semibold text-center mb-4">Sign Up</h2>
-        {passwordError && (
-              <p className="text-error text-sm mt-1">Passwords do not match.</p>
+        {isError && (
+              <p className="text-error text-sm mt-1">{errorMessage}</p>
           )}
         <form onSubmit={handleSignup} className="flex flex-col space-y-4">
           
