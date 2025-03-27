@@ -122,6 +122,7 @@ const CalendarModal = () => {
                         <form method="dialog">
                             <button className="btn" onClick={() => {
                                     setCalendarModalOpen(true);
+                                    setApplicationModalOpen(false);
                                 }
                             }>Close</button>
                         </form>
