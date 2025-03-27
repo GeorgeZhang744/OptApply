@@ -118,10 +118,13 @@ const CalendarModal = () => {
                         </div>
                     ))}
 
-                    <div className="modal-action mt-4">
-                        <button className="btn btn-primary btn-sm" onClick={() => {
-                            
-                        }}>Close</button>
+                    <div className="modal-action">
+                        <form method="dialog">
+                            <button className="btn" onClick={() => {
+                                    setCalendarModalOpen(true);
+                                }
+                            }>Close</button>
+                        </form>
                     </div>
                 </div>
             </dialog>
