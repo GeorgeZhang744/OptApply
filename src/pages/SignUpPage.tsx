@@ -34,15 +34,16 @@ const SignUpPage = () => {
     }
 
     const newUser = {
-      id: mockUsers.length + 1,
+      id: `u${mockUsers.length + 1}`,
       email,
       password,
     };
     mockUsers.push(newUser);
 
     navigate("/home");
-    console.log("Email: ", email);
-    console.log("Password: ", password);
+    console.log("ID: ", newUser.id);
+    console.log("Email: ", newUser.email);
+    console.log("Password: ", newUser.password);
   };
 
   return (
