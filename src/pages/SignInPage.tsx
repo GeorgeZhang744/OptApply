@@ -1,18 +1,34 @@
 import { useState } from "react";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
+import {mockUsers} from "../data/signupData";
 
 
 const SignInPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+
 
   const handleLogin = (login: React.FormEvent) => {
     login.preventDefault();
-    navigate("/home");
-    console.log("Email: ", email);
-    console.log("Password: ", password);
+
+    const isUser = mockUsers.find(
+      user => user.email === email && user.password ===password
+    )
+
+    if(isUser){
+      login.preventDefault();
+      navigate("/home");
+      console.log("Login Successful");
+      console.log("Email: ", email);
+      console.log("Password: ", password);
+    } else{
+      console.log("Invalid email or password");
+      setError(true);
+    }
+    
   };
 
   return (
@@ -26,6 +42,9 @@ const SignInPage = () => {
       <div className="bg-neutral text-neutral-content p-8 shadow-md rounded-lg w-full max-w-md">
         <h2 className="text-2xl font-semibold text-center mb-4">Sign In</h2>
 
+        {error && (
+              <p className="text-error text-sm mt-1">Invalid email or password.</p>
+        )}
         
         <form onSubmit={handleLogin} className="flex flex-col space-y-4">
           
