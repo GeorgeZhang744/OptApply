@@ -43,7 +43,7 @@ const SignInPage = () => {
         <h2 className="text-2xl font-semibold text-center mb-4">Sign In</h2>
 
         {error && (
-              <p className="text-error text-sm mt-1">Passwords do not match.</p>
+              <p className="text-error text-sm mt-1">Invalid email or password.</p>
         )}
         
         <form onSubmit={handleLogin} className="flex flex-col space-y-4">
