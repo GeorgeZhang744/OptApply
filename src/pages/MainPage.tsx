@@ -1,6 +1,6 @@
 import ToolBar from "../components/ToolBar/ToolBar";
 import ApplicationTable from "../components/ApplicationTable/ApplicationTable";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { mockApplications } from "../data/mockdata";
 
 const MainPage = () => {
@@ -22,7 +22,8 @@ const MainPage = () => {
     fetchApplication();
   }, []);
 
-  const toggleApplicationSelection = (applicationId: string) => {
+  // Prevents function recreation because it is passed to a child component
+  const toggleApplicationSelection = useCallback((applicationId: string) => {
     setSelectedApplications((prevSelected) => {
       const newSelected = new Set(prevSelected);
       if (newSelected.has(applicationId)) {
@@ -32,22 +33,28 @@ const MainPage = () => {
       }
       return newSelected;
     });
-  };
+  }, []);
 
-  const handleDelete = () => {
+  // Prevents function recreation because it is passed to a child component
+  const handleDelete = useCallback(() => {
     // TODO: This is place holder function for deleting feature. Implement actual delete logic here
     console.log("Selected Application IDs:", Array.from(selectedApplications));
-  };
+  }, [selectedApplications]);
 
-  const filteredApplications = applications.filter((application: models.application.IApplication) => {
-    const searchHelper = (searchField: string) => {
-      return searchField.toLowerCase().includes(searchQuery.toLowerCase());
-    };
+  // Prevents function recreation because it is passed to a child component
+  const filteredApplications = useMemo(
+    () =>
+      applications.filter((application: models.application.IApplication) => {
+        const searchHelper = (searchField: string) => {
+          return searchField.toLowerCase().includes(searchQuery.toLowerCase());
+        };
 
-    const matchesFilter = filterOption === "All Application" || application.status === filterOption;
-    const matchesSearch = searchHelper(application.company) || searchHelper(application.position);
-    return matchesFilter && matchesSearch;
-  });
+        const matchesFilter = filterOption === "All Application" || application.status === filterOption;
+        const matchesSearch = searchHelper(application.company) || searchHelper(application.position);
+        return matchesFilter && matchesSearch;
+      }),
+    [applications, filterOption, searchQuery]
+  );
 
   return (
     <div className="container w-full mx-auto mt-24">

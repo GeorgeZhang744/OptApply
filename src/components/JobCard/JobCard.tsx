@@ -1,5 +1,5 @@
 import { IconX } from "@tabler/icons-react";
-import { Link} from "react-router";
+import { Link } from "react-router";
 
 import { formatSalary } from "../../utils/applicationDataProcessing";
 

@@ -1,5 +1,5 @@
 // TODO: update the mock up main page view with more realistic data
-import mockMainPageView from "../assets/mockMainPageView.png";
+import mockMainPageView from "../assets/mockMainPageView.webp";
 
 const LandingPage = () => {
   return (

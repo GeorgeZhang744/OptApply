@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ApplicationForm from "../components/ApplicationForm/ApplicationForm";
 import { mockApplications } from "../data/mockdata";
@@ -19,10 +19,13 @@ const EditApplicationPage = () => {
     note: "",
   });
 
+  // Memoize finding the application data
+  const foundApplication = useMemo(() => {
+    return mockApplications.find((application: models.application.IApplication) => application.id === applicationId) || null;
+  }, [applicationId]);
+
   useEffect(() => {
     const fetchApplication = async () => {
-      const foundApplication =
-        mockApplications.find((application: models.application.IApplication) => application.id === applicationId) || null;
       if (foundApplication) {
         setFormData({
           ...foundApplication,
@@ -37,9 +40,10 @@ const EditApplicationPage = () => {
     };
 
     fetchApplication();
-  }, [applicationId]);
+  }, [foundApplication]);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // Prevents function recreation because it is passed to a child component
+  const handleInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     if (name === "salaryMin" || name === "salaryMax") {
       // Handle salary input update
@@ -55,17 +59,19 @@ const EditApplicationPage = () => {
       // Handle other input update
       setFormData((prevData) => ({ ...prevData, [name]: value }));
     }
-  };
+  }, []);
 
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  // Prevents function recreation because it is passed to a child component
+  const handleSelectChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
+  }, []);
 
-  const handleTextareaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  // Prevents function recreation because it is passed to a child component
+  const handleTextareaChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
+  }, []);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -77,7 +83,7 @@ const EditApplicationPage = () => {
   return (
     <div className="container mx-auto mt-32 mb-10 px-4">
       <h1 className="text-2xl font-bold mb-4">Edit Application</h1>
-      
+
       <ApplicationForm
         formData={formData}
         handleInputChange={handleInputChange}
