@@ -1,27 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import ApplicationForm from "../components/ApplicationForm/ApplicationForm";
 
 const AddApplicationPage = () => {
   const [url, setUrl] = useState("");
-  const [formData, setFormData] = useState({
-    company: "",
-    position: "",
-    applicationUrl: "",
-    deadline: "",
-    workLocation: "Remote",
-    status: "Applied",
-    salary: { min: 0, max: 0 },
-    skillsRequired: "",
-    jobDescription: "",
-    note: "",
-  });
+
+  // Memoizes initial form state to prevent unnecessary re-renders
+  const initialFormState = useMemo(
+    () => ({
+      company: "",
+      position: "",
+      applicationUrl: "",
+      deadline: "",
+      workLocation: "Remote",
+      status: "Applied",
+      salary: { min: 0, max: 0 },
+      skillsRequired: "",
+      jobDescription: "",
+      note: "",
+    }),
+    []
+  );
+
+  const [formData, setFormData] = useState(initialFormState);
 
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(event.target.value);
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // Prevents function recreation because it is passed to a child component
+  const handleInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     if (name === "salaryMin" || name === "salaryMax") {
       // Handle salary input update
@@ -36,17 +44,19 @@ const AddApplicationPage = () => {
       // Handle other input update
       setFormData((prevData) => ({ ...prevData, [name]: value }));
     }
-  };
-
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  }, []);
+  
+  // Prevents function recreation because it is passed to a child component
+  const handleSelectChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  const handleTextareaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  }, []);
+  
+  // Prevents function recreation because it is passed to a child component
+  const handleTextareaChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
+  }, []);
 
   const handleExtractInfo = () => {
     // TODO: Placeholder for extraction logic
