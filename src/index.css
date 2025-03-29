@@ -3,14 +3,16 @@
   themes: nord --default;
 }
 
-/* Some light options */
 
-/* bumblebee */
-/* autumn */
-/* nord */
+.calendar-big {
+  font-size: 1.2rem;
+}
 
-/* Some dark options */
+.calendar-big .react-calendar__tile {
+  padding: 1.5rem 0.75rem;
+}
 
-/* dracula */
-/* business */
-/* night */
+.react-calendar__navigation__arrow {
+  font-size: 1.5rem; /* Makes calendar navigation arrow larger */
+  padding: 0.75rem;  
+}

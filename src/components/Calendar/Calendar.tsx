@@ -1,11 +1,13 @@
 import Calendar from 'react-calendar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { mockApplications } from '../../data/mockdata';
 import { Link } from "react-router-dom";
 
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
+
+
 
 
 const CalendarModal = () => {
@@ -53,38 +55,51 @@ const CalendarModal = () => {
           setCalendarModalOpen(false);
         }
       };
+
+      useEffect(() => {
+        if (isAppModalOpen) {
+          document.documentElement.classList.add("modal-open");
+        } else {
+          document.documentElement.classList.remove("modal-open");
+        }
+      }, [isAppModalOpen]);
+
+
     
   return (
     <div>
         {isCalendarModalOpen && (
             <dialog id="calendarModal" className="modal">
-                <div className="modal-box mx-auto my-auto">
+                <div className="modal-box w-full max-w-3xl p-6 max-h-[90vh] h-auto">
                     <div className="p-4 rounded-lg shadow-md border border-gray-300 bg-white">
-                        <Calendar
-                            onChange={onChange}
-                            value={selectedDay}
-                            className="react-calendar"
-                            minDetail="year"
-                            tileContent={({ date, view }) => {
-                                if (view === "month" && hasDeadline(date)) {
-                                    return (
-                                        <div className="flex justify-center items-center mt-1">
-                                            <div className="w-2 h-2 rounded-full bg-red-500" />
-                                        </div>
-                                    );
-                                  }
-                                  if (view === "year" && monthWithDeadline(date)) {
-                                    return (
-                                        <div className="flex justify-center items-center mt-1">
-                                            <div className="w-2 h-2 rounded-full bg-red-500" />
-                                        </div>
-                                    );
-                                  }
-                              
-                                  return null;
-                                }}
-                            onClickDay={handleDayClick}
-                        />
+                            <Calendar
+                                onChange={onChange}
+                                value={selectedDay}
+                                className="react-calendar calendar-big"
+                                minDetail="year"
+                                tileContent={({ date, view }) => {
+                                    if (view === "month" && hasDeadline(date)) {
+                                        return (
+                                            <div className="flex justify-center items-center mt-1">
+                                                <div className="w-2 h-2 rounded-full bg-red-500" />
+                                            </div>
+                                        );
+                                    }
+                                    if (view === "year" && monthWithDeadline(date)) {
+                                        return (
+                                            <div className="flex justify-center items-center mt-1">
+                                                <div className="w-2 h-2 rounded-full bg-red-500" />
+                                            </div>
+                                        );
+                                    }
+                                
+                                    return null;
+                                    }}
+                                onClickDay={handleDayClick}
+                                next2Label={null}
+                                prev2Label={null}
+                                showNeighboringMonth={false}
+                            />
                     </div>
                     <div className="modal-action">
                         <form method="dialog">
