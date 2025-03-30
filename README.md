@@ -15,6 +15,9 @@
 ## 📌 Project Overview
 OptApply is a free, centralized platform designed to help job seekers efficiently manage applications, interviews, and deadlines. By integrating with job boards, automatically categorizing application statuses, and providing a built-in calendar feature, it eliminates the stress of manual tracking and ensures users stay organized. Ideal for college students, career changers, and busy professionals, this tool simplifies the job search process, preventing missed deadlines, forgotten interviews, and duplicate applications, ultimately making job hunting more seamless and efficient.
 
+## 🧠 Design Document
+You can view the full project design document [here](https://docs.google.com/document/d/115wmBmK20qLrCS8_cTwytofm7p_IqMYXVrlOpCq45S8/edit?tab=t.0)
+
 ## 🏃 Run Instructions
 To run OptApply locally, follow these steps:
 
