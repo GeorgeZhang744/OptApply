@@ -5,10 +5,10 @@ const TableHeader = () => {
         <th className="p-3"></th>
         <th className="p-3">Company</th>
         <th className="p-3">Position</th>
-        <th className="p-3">Application</th>
+        <th className="p-3 hidden sm:table-cell">Application</th>
         <th className="p-3">Deadline</th>
-        <th className="p-3">Remote</th>
-        <th className="p-3">Status</th>
+        <th className="p-3 hidden sm:table-cell">Remote</th>
+        <th className="p-3 hidden sm:table-cell">Status</th>
       </tr>
     </thead>
   );
