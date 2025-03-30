@@ -59,13 +59,13 @@ const CalendarModal = () => {
   return (
     <div>
       {isCalendarModalOpen && (
-        <dialog id="calendarModal" className="modal">
-          <div className="modal-box w-full max-w-3xl p-6 max-h-[90vh] h-auto">
-            <div className="p-4 rounded-lg shadow-md border border-gray-300 bg-white">
+        <dialog id="calendarModal" className="modal p-2">
+          <div className="modal-box w-full max-w-2xl p-2">
+            <div className="flex justify-center p-4 rounded-lg shadow-md border border-gray-300 bg-white">
               <Calendar
                 onChange={onChange}
                 value={selectedDay}
-                className="react-calendar calendar-big"
+                className="react-calendar calendar-big "
                 minDetail="year"
                 tileContent={({ date, view }) => {
                   if (view === "month" && hasDeadline(date)) {
@@ -75,14 +75,6 @@ const CalendarModal = () => {
                       </div>
                     );
                   }
-                  if (view === "year" && monthWithDeadline(date)) {
-                    return (
-                      <div className="flex justify-center items-center mt-1">
-                        <div className="w-2 h-2 rounded-full bg-red-500" />
-                      </div>
-                    );
-                  }
-
                   return null;
                 }}
                 onClickDay={handleDayClick}
@@ -91,9 +83,9 @@ const CalendarModal = () => {
                 showNeighboringMonth={false}
               />
             </div>
-            <div className="modal-action">
+            <div className="modal-action flex justify-end px-2">
               <form method="dialog">
-                <button className="btn">Close</button>
+                <button className="btn px-10">Close</button>
               </form>
             </div>
           </div>
@@ -101,7 +93,7 @@ const CalendarModal = () => {
       )}
 
       {isAppModalOpen && (
-        <div className="modal modal-open">
+        <div className="modal modal-open p-4">
           <div className="modal-box max-w-md w-full bg-white rounded-lg p-4">
             <h3 className="text-lg font-semibold mb-2">Job(s) with Deadline</h3>
             {selectedJobs.map((job, index) => (
