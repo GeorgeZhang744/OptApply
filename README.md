@@ -22,8 +22,10 @@ To run OptApply locally, follow these steps:
 
 2. **Install dependencies and start the development server**:
 
+   ```
    npm install
    npm run dev
+   ```
 
 4. Once the server is running, open your browser and go to [http://localhost:5173](http://localhost:5173).
 
