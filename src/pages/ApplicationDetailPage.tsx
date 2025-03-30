@@ -22,11 +22,11 @@ const ApplicationDetailPage = () => {
   }, [foundApplication]);
 
   return (
-    <div className="container w-full mx-auto mt-24">
+    <div className="container w-full mx-auto mt-24 px-1">
       {application ? (
         <>
           <JobCard application={application} />
-          <div className="flex justify-end space-x-2 mt-4">
+          <div className="flex justify-end space-x-2 mt-4 mx-1">
             <Link to={`/edit/${applicationId}`} className="btn btn-primary">
               Edit
             </Link>

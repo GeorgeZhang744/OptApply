@@ -9,8 +9,10 @@
 }
 
 .calendar-big .react-calendar__tile {
-  padding: 1.5rem 0.75rem;
+  padding: 0.5rem 0.75rem;
 }
+
+
 
 .react-calendar__navigation__arrow {
   font-size: 1.5rem; /* Makes calendar navigation arrow larger */

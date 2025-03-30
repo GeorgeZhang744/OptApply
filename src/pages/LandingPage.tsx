@@ -3,7 +3,7 @@ import mockMainPageView from "../assets/mockMainPageView.webp";
 
 const LandingPage = () => {
   return (
-    <div className="min-h-screen w-full bg-blue-50">
+    <div className="min-h-screen  mt-16 w-full bg-blue-50">
       <div className="hero bg-blue-50 min-h-[calc(100vh-4rem)] px-6 lg:px-20">
         <div className="hero-content flex-col lg:flex-row-reverse w-full max-w-7xl mx-auto gap-16 items-center">
           {/* Mockup Browser Image - Right */}

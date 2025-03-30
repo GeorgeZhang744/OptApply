@@ -33,14 +33,14 @@ const TableRow: React.FC<ITableRowProps> = ({ application, isChecked, toggleSele
       </td>
       <td className="p-3">{application.company}</td>
       <td className="p-3">{application.position}</td>
-      <td className="p-3 text-info">
+      <td className="p-3 text-info hidden sm:table-cell">
         <a href={application.applicationUrl} target="_blank" rel="noopener noreferrer">
           {application.applicationUrl}
         </a>
       </td>
       <td className="p-3">{application.deadline.toLocaleDateString()}</td>
-      <td className="p-3">{application.workLocation}</td>
-      <td className="p-3">{application.status}</td>
+      <td className="p-3 hidden sm:table-cell">{application.workLocation}</td>
+      <td className="p-3 hidden sm:table-cell">{application.status}</td>
     </tr>
   );
 };
