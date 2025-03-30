@@ -7,7 +7,7 @@ const NavBar = () => {
   const curLocation = useLocation();
   const loggedIn = !(curLocation.pathname == "/" || curLocation.pathname == "/login" || curLocation.pathname == "/signup");
   return (
-    <nav className="navbar bg-primary px-6 py-3 fixed top-0 left-0 w-full shadow-md flex items-center z-50">
+    <nav className="navbar bg-primary px-6 py-3 fixed top-0 left-0 w-full shadow-md flex items-center z-50 h-16">
       {loggedIn ? (
         <Link to="/home">
           <div className="flex items-center space-x-2">
