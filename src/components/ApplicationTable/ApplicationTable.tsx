@@ -14,7 +14,7 @@ const ApplicationTable: React.FC<IApplicationTableProps> = ({
   toggleApplicationSelection,
 }) => {
   return (
-    <div className="overflow-x-auto rounded-lg bg-neutral border border-secondary mt-2">
+    <div className="overflow-x-auto rounded-lg bg-neutral border border-secondary m-1">
       <table className="table w-full text-sm text-left">
         <TableHeader />
 
