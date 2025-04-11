@@ -7,7 +7,14 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start:client": "vite",
+    "start:gateway": "cd ../gateway && npm run dev",
+    "start:auth": "cd ../services/auth && npm run dev",
+    "start:applications": "cd ../services/applications && npm run dev",
+    "start:calendar": "cd ../services/calendar && npm run dev",
+    "start:scrapper": "cd ../services/scrapper && uvicorn src.main:app --host 0.0.0.0 --port 3004 --reload",
+    "start:all": "concurrently -n client,gateway,auth,apps,calendar,scraper -c blue,cyan,green,magenta,yellow,red \"npm run start:client\" \"npm run start:gateway\" \"npm run start:auth\" \"npm run start:applications\" \"npm run start:calendar\" \"npm run start:scrapper\""
   },
   "dependencies": {
     "@tabler/icons-react": "^3.31.0",
@@ -25,6 +32,7 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.2",
     "daisyui": "^5.0.0",
     "eslint": "^9.21.0",
     "eslint-plugin-react-hooks": "^5.1.0",
