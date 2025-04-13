@@ -1,5 +1,5 @@
 ## Setup Instructions
-First cd into the auth service folder and run 
+First cd into the auth service, the gateway service, and the client folder and run 
 ```
 npm install
 ```
@@ -16,7 +16,7 @@ CREATE TABLE users (
 ```
 
 
-## Set up env file
+## Create / set up env file
 ```
 DATABASE_URL=postgresql://<username>:<password>@<hostName>:<port>/<databaseName>
 PORT=XXXX
@@ -24,8 +24,11 @@ PORT=XXXX
 If using pgAdmin, you can access all the necessary information to set up the database url by right clicking on the server you are using and clicking properties. 
 
 
-## Testing Sign Up Functionality
+## Testing Sign Up / Sign in Functionality
 
-- Run the client, gateway service, and auth service
+- Run the client, gateway service, auth service, and local db you are connecting to
 - Create account
--Check db to see newly added account
+- Check db to see newly added account
+- You can now sign in with the newly created account
+
+***NOTE*** On some builds running npm start:all will not work due to undergoing development of other services. To check this functionality out on its own, you can just run the client (cd into client then run npm run:client), gateway service (cd into gateway folder and run npm run build, npm run start), and auth service (cd into auth folder and run npm run build, npm run start). Running these three simultaneously will allow you to test this feature.

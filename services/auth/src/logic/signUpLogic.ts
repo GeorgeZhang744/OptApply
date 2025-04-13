@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs';
 import { pool } from '../db';
 
 export const handleSignup = async (req: Request, res: Response): Promise<any> => {
-  
 
   //gets user inputted information
   const { email, password } = req.body;
