@@ -16,7 +16,6 @@ const SignUpPage = () => {
   const passwordsMatch = (password === password2);
 
   const handleSignup = async (login: React.FormEvent) => {
-    console.log("trying to sign up");
     login.preventDefault();
     if (!passwordsMatch) {
       console.error("Passwords do not match!");
@@ -26,7 +25,6 @@ const SignUpPage = () => {
     }
 
     try {
-      console.log("About to send:", { email, password });
       const response = await fetch("http://localhost:3000/api/auth/signup", {
         method: "POST",
         headers: {
@@ -34,7 +32,6 @@ const SignUpPage = () => {
         },
         body: JSON.stringify({ email, password }),
       });
-      console.log("running here");
       
       const data = await response.json();
       if (!response.ok) {
@@ -47,7 +44,6 @@ const SignUpPage = () => {
       navigate("/home");
       console.log("User ID:", data.userId);
     } catch (err) {
-      console.log("ran into error");
       setError(true);
       setErrorMessage("Failed to connect to server.");
       console.log(err);

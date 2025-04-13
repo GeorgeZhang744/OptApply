@@ -10,7 +10,6 @@ app.use(cors());
 
 app.post("/api/auth/signup", (req, res, next) => {
   req.url = "/auth/signup"; 
-  console.log("[GATEWAY] Rewriting request to /auth/signup manually");
   
   createProxyMiddleware({
     target: "http://localhost:3001",
