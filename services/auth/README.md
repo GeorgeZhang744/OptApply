@@ -17,9 +17,10 @@ CREATE TABLE users (
 
 
 ## Create / set up env file
+Create the following env file in the auth folder
 ```
 DATABASE_URL=postgresql://<username>:<password>@<hostName>:<port>/<databaseName>
-PORT=XXXX
+PORT=3001
 ```
 If using pgAdmin, you can access all the necessary information to set up the database url by right clicking on the server you are using and clicking properties. 
 
