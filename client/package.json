@@ -13,7 +13,7 @@
     "start:auth": "cd ../services/auth && npm run dev",
     "start:applications": "cd ../services/applications && npm run dev",
     "start:calendar": "cd ../services/calendar && npm run dev",
-    "start:scrapper": "cd ../services/scrapper && uvicorn src.main:app --host 0.0.0.0 --port 3004 --reload",
+    "start:scrapper": "cd ../services/scrapper && uvicorn src.main:app --host 0.0.0.0 --port 3004",
     "start:all": "concurrently -n client,gateway,auth,apps,calendar,scraper -c blue,cyan,green,magenta,yellow,red \"npm run start:client\" \"npm run start:gateway\" \"npm run start:auth\" \"npm run start:applications\" \"npm run start:calendar\" \"npm run start:scrapper\""
   },
   "dependencies": {
