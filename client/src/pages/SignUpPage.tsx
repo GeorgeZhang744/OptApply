@@ -1,7 +1,7 @@
 import { useState } from "react";
 import logo from "../assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import {mockUsers} from "../data/signupData";
+//import {mockUsers} from "../data/signupData";
 
 
 
@@ -15,7 +15,8 @@ const SignUpPage = () => {
 
   const passwordsMatch = (password === password2);
 
-  const handleSignup = (login: React.FormEvent) => {
+  const handleSignup = async (login: React.FormEvent) => {
+    console.log("trying to sign up");
     login.preventDefault();
     if (!passwordsMatch) {
       console.error("Passwords do not match!");
@@ -24,26 +25,54 @@ const SignUpPage = () => {
       return;
     }
 
-    const emailExists = mockUsers.some(user => user.email === email);
-
-    if (emailExists) {
-      console.error("Email already exists");
-      setErrorMessage("Email already in use");
+    try {
+      console.log("About to send:", { email, password });
+      const response = await fetch("http://localhost:3000/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      console.log("running here");
+      
+      const data = await response.json();
+      if (!response.ok) {
+        setError(true);
+        setErrorMessage(data.message || "Something went wrong");
+        return;
+      }
+  
+      // Success
+      navigate("/home");
+      console.log("User ID:", data.userId);
+    } catch (err) {
+      console.log("ran into error");
       setError(true);
-      return;
+      setErrorMessage("Failed to connect to server.");
+      console.log(err);
     }
 
-    const newUser = {
-      id: `u${mockUsers.length + 1}`,
-      email,
-      password,
-    };
-    mockUsers.push(newUser);
+    // const emailExists = mockUsers.some(user => user.email === email);
 
-    navigate("/home");
-    console.log("ID: ", newUser.id);
-    console.log("Email: ", newUser.email);
-    console.log("Password: ", newUser.password);
+    // if (emailExists) {
+    //   console.error("Email already exists");
+    //   setErrorMessage("Email already in use");
+    //   setError(true);
+    //   return;
+    // }
+
+    // const newUser = {
+    //   id: `u${mockUsers.length + 1}`,
+    //   email,
+    //   password,
+    // };
+    // mockUsers.push(newUser);
+
+    // navigate("/home");
+    // console.log("ID: ", newUser.id);
+    // console.log("Email: ", newUser.email);
+    // console.log("Password: ", newUser.password);
   };
 
   return (
