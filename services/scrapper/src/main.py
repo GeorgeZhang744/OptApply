@@ -7,7 +7,7 @@ app = FastAPI()
 class ScrapeRequest(BaseModel):
   url: str
 
-@app.post("/scrape")
+@app.post("/scrapper/fill")
 async def scrape_job(request: ScrapeRequest):
   try:
     job_info = await job_scrapper.get_job_info_from_url(request.url)
