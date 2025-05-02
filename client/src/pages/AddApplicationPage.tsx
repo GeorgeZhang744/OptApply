@@ -58,21 +58,50 @@ const AddApplicationPage = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   }, []);
 
-  const handleExtractInfo = () => {
-    // TODO: Placeholder for extraction logic
-    // Simulate extraction by setting some dummy data
-    setFormData({
-      company: "Extracted Company",
-      position: "Extracted Job Title",
-      applicationUrl: "http://example.com",
-      deadline: "2024-05-01",
-      workLocation: "Remote",
-      status: "Applied",
-      salary: { min: 50000, max: 70000 },
-      skillsRequired: "JavaScript, React, Node.js",
-      jobDescription: "Extracted job description",
-      note: "Extracted note",
-    });
+  const handleExtractInfo = async () => {
+    // Validate URL format (basic validation)
+    if (!url) return;
+
+    try {
+      // Send a POST request to the scrapper service to extract job info
+      const response = await fetch("http://localhost:3000/api/scrapper/fill", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url }),
+      });
+
+      if (!response.ok) throw new Error("Failed to extract job info");
+
+      const { result } = await response.json();
+
+      // Debug log the result
+      console.log("Extracted result:", result);
+
+      // Reformat the skillsRequired field array into a comma-separated string
+      // Ex:ample: ["JavaScript", "React"] => "JavaScript, React"
+      const skillsRequired = Array.isArray(result.skillsRequired)
+        ? result.skillsRequired.join(", ")
+        : result.skillsRequired || "";
+
+      setFormData({
+        company: result.company || "",
+        position: result.position || "",
+        applicationUrl: result.applicationUrl || url,
+        deadline: result.deadline || "",
+        workLocation: result.workLocation || "Remote",
+        status: result.status || "Applied",
+        salary: {
+          min: result.salary?.min ?? 0,
+          max: result.salary?.max ?? 0,
+        },
+        skillsRequired,
+        jobDescription: result.jobDescription || "",
+        note: "",
+      });
+    } catch (error) {
+      console.error("Error extracting job info:", error);
+      alert("Failed to extract job info. Please try again.");
+    }
   };
 
   return (
