@@ -1,8 +1,12 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useContext } from "react";
 import { Link } from "react-router-dom";
 import ApplicationForm from "../components/ApplicationForm/ApplicationForm";
+import Loading from "../components/Loading/Loading";
+import { LoadingContext } from "../contexts/LoadingContext";
 
 const AddApplicationPage = () => {
+  const loadingContext = useContext(LoadingContext);
+
   const [url, setUrl] = useState("");
 
   // Memoizes initial form state to prevent unnecessary re-renders
@@ -62,7 +66,18 @@ const AddApplicationPage = () => {
     // Validate URL format (basic validation)
     if (!url) return;
 
+    let loadingTimeout;
+
     try {
+      // Show loading spinner
+      loadingContext?.updateLoading(true);
+
+      // Create a 15 seconds timeout to auto-clear loading in case the fetch hangs
+      loadingTimeout = setTimeout(() => {
+        loadingContext?.updateLoading(false);
+        alert("Request timed out. Please try again.");
+      }, 15000); 
+
       // Send a POST request to the scrapper service to extract job info
       const response = await fetch("http://localhost:3000/api/scrapper/fill", {
         method: "POST",
@@ -98,14 +113,21 @@ const AddApplicationPage = () => {
         jobDescription: result.jobDescription || "",
         note: "",
       });
+
+      loadingContext?.updateLoading(false);
     } catch (error) {
       console.error("Error extracting job info:", error);
       alert("Failed to extract job info. Please try again.");
+    } finally {
+      // Clear the timeout and set loading to false
+      clearTimeout(loadingTimeout);
+      loadingContext?.updateLoading(false);
     }
   };
 
   return (
     <div className="container mx-auto mt-32 mb-10 px-4">
+      <Loading isOpen={loadingContext?.loading ?? false} />
       <h1 className="text-2xl font-bold mb-4">Add New Application</h1>
 
       {/* URL Input Section */}
