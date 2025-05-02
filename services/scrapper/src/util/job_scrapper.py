@@ -68,7 +68,7 @@ async def fetch_html_content(url: str) -> str:
   """
   async with async_playwright() as p:
     # Launch browser in headless mode (without having a GUI for the browser opened)
-    browser = await p.chromium.launch()
+    browser = await p.chromium.launch(headless=False)
     context = await browser.new_context()
     page = await context.new_page()
 
