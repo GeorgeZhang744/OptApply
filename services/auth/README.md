@@ -21,6 +21,7 @@ Create the following env file in the auth folder
 ```
 DATABASE_URL=postgresql://<username>:<password>@<hostName>:<port>/<databaseName>
 PORT=3001
+JWT_SECRET=<your-generated-jwt-secret-key>
 ```
 If using pgAdmin, you can access all the necessary information to set up the database url by right clicking on the server you are using and clicking properties. 
 

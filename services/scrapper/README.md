@@ -16,6 +16,7 @@ playwright install
 
 ```env
 OPENAI_API_KEY=your-openai-api-key
+JWT_SECRET=your-jwt-secret
 ```
 
 ### 4. Run the FastAPI server
