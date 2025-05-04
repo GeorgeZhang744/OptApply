@@ -21,5 +21,12 @@ router.post("/signin", (req, res, next) => {
   })(req, res, next);
 });
 
+router.post("/validate", (req, res, next) => {
+  req.url = "/auth/validate";
+  createProxyMiddleware({
+    target: PROXY_TARGET,
+    changeOrigin: true,
+  })(req, res, next);
+});
 
 export default router;
