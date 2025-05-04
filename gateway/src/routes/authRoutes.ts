@@ -30,10 +30,14 @@ router.post("/signin", (req, res, next) => {
 });
 
 router.post("/validate", (req, res, next) => {
-  req.url = "/auth/validate";
+  // req.url = "/auth/validate";
   createProxyMiddleware({
     target: PROXY_TARGET,
     changeOrigin: true,
+    pathRewrite: {
+      "^/validate": "/auth/validate",
+    },
+    logger: console,
   })(req, res, next);
 });
 
