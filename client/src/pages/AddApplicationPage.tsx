@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import ApplicationForm from "../components/ApplicationForm/ApplicationForm";
 import Loading from "../components/Loading/Loading";
 import { LoadingContext } from "../contexts/LoadingContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 const AddApplicationPage = () => {
   const loadingContext = useContext(LoadingContext);
+  const authContext = useContext(AuthContext);
 
   const [url, setUrl] = useState("");
 
@@ -49,13 +51,13 @@ const AddApplicationPage = () => {
       setFormData((prevData) => ({ ...prevData, [name]: value }));
     }
   }, []);
-  
+
   // Prevents function recreation because it is passed to a child component
   const handleSelectChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   }, []);
-  
+
   // Prevents function recreation because it is passed to a child component
   const handleTextareaChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -63,8 +65,8 @@ const AddApplicationPage = () => {
   }, []);
 
   const handleExtractInfo = async () => {
-    // Validate URL format (basic validation)
-    if (!url) return;
+    // Validate URL format (basic validation) and make sure user is logged in (jwtToken is available)
+    if (!url || !authContext || !authContext.jwtToken) return;
 
     let loadingTimeout;
 
@@ -72,16 +74,16 @@ const AddApplicationPage = () => {
       // Show loading spinner
       loadingContext?.updateLoading(true);
 
-      // Create a 15 seconds timeout to auto-clear loading in case the fetch hangs
+      // Create a 20 seconds timeout to auto-clear loading in case the fetch hangs
       loadingTimeout = setTimeout(() => {
         loadingContext?.updateLoading(false);
         alert("Request timed out. Please try again.");
-      }, 15000); 
+      }, 20000);
 
       // Send a POST request to the scrapper service to extract job info
       const response = await fetch("http://localhost:3000/api/scrapper/fill", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${authContext.jwtToken}` },
         body: JSON.stringify({ url }),
       });
 
