@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import { pool } from "../db";
+import jwt, {SignOptions} from "jsonwebtoken";
 
 export const handleSignin = async (req: Request, res: Response): Promise<any> => {
   const { email, password } = req.body;
@@ -22,11 +23,18 @@ export const handleSignin = async (req: Request, res: Response): Promise<any> =>
         return res.status(401).json({ status: "FAILURE", message: "Invalid email or password" });
     }
 
+    //generate JWT token
+    const token = jwt.sign(
+      { userId: user.id, email: user.email },
+      process.env.JWT_SECRET as string,
+      { expiresIn: "1h"}
+    );
+
     //email and matching password successfully found
     return res.status(200).json({
         status: "SUCCESS",
+        token: token,
         userId: user.id,
-        email: user.email
     });
 
   } catch (err) {
