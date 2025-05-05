@@ -1,0 +1,75 @@
+# TODO: This configuration is not final and may need to be tested and revised after other all services are dockerized
+version: '1.0'
+name: OptApply
+
+services:
+  auth:
+    build:
+      context: ./services/auth
+    container_name: auth
+    ports:
+      - "3001:3001"
+    networks:
+      - network
+
+  application:
+    build:
+      context: ./services/application
+    container_name: application
+    ports:
+      - "3002:3002"
+    depends_on:
+      - auth
+    networks:
+      - network
+
+  calendar:
+    build:
+      context: ./services/calendar
+    container_name: calendar
+    ports:
+      - "3003:3003"
+    depends_on:
+      - auth
+    networks:
+      - network
+
+  scrapper:
+    build:
+      context: ./services/scrapper
+    container_name: scrapper
+    ports:
+      - "3004:3004"
+    depends_on:
+      - auth
+    networks:
+      - network
+
+  gateway:
+    build:
+      context: ./gateway
+    container_name: gateway
+    ports:
+      - "3000:3000"
+    depends_on:
+      - auth
+      - application
+      - calendar
+      - scrapper
+    networks:
+      - network
+  
+  client:
+    build:
+      context: ./client
+    container_name: client
+    ports:
+      - "5173:5173"
+    depends_on:
+      - gateway
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
