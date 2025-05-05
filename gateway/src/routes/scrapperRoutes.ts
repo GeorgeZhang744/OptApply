@@ -1,15 +1,19 @@
 import { Router } from "express";
-import { createProxyMiddleware } from "http-proxy-middleware";
+import { createProxyMiddleware, fixRequestBody } from "http-proxy-middleware";
 
 const router = Router();
 
-const PROXY_TARGET = "http://localhost:3004";
+const PROXY_TARGET = "http://127.0.0.1:3004";
 
 router.post("/fill", (req, res, next) => {
-  req.url = "/scrapper/fill";
+  // req.url = "/scrapper/fill";
   createProxyMiddleware({
     target: PROXY_TARGET,
     changeOrigin: true,
+    pathRewrite: {
+      "/fill": "/scrapper/fill",
+    },
+    logger: console,
   })(req, res, next);
 });
 

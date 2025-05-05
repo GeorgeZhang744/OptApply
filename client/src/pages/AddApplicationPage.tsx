@@ -1,8 +1,14 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useContext } from "react";
 import { Link } from "react-router-dom";
 import ApplicationForm from "../components/ApplicationForm/ApplicationForm";
+import Loading from "../components/Loading/Loading";
+import { LoadingContext } from "../contexts/LoadingContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 const AddApplicationPage = () => {
+  const loadingContext = useContext(LoadingContext);
+  const authContext = useContext(AuthContext);
+
   const [url, setUrl] = useState("");
 
   // Memoizes initial form state to prevent unnecessary re-renders
@@ -45,38 +51,85 @@ const AddApplicationPage = () => {
       setFormData((prevData) => ({ ...prevData, [name]: value }));
     }
   }, []);
-  
+
   // Prevents function recreation because it is passed to a child component
   const handleSelectChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   }, []);
-  
+
   // Prevents function recreation because it is passed to a child component
   const handleTextareaChange = useCallback((event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   }, []);
 
-  const handleExtractInfo = () => {
-    // TODO: Placeholder for extraction logic
-    // Simulate extraction by setting some dummy data
-    setFormData({
-      company: "Extracted Company",
-      position: "Extracted Job Title",
-      applicationUrl: "http://example.com",
-      deadline: "2024-05-01",
-      workLocation: "Remote",
-      status: "Applied",
-      salary: { min: 50000, max: 70000 },
-      skillsRequired: "JavaScript, React, Node.js",
-      jobDescription: "Extracted job description",
-      note: "Extracted note",
-    });
+  const handleExtractInfo = async () => {
+    // Validate URL format (basic validation) and make sure user is logged in (jwtToken is available)
+    if (!url || !authContext || !authContext.jwtToken) return;
+
+    let loadingTimeout;
+
+    try {
+      // Show loading spinner
+      loadingContext?.updateLoading(true);
+
+      // Create a 20 seconds timeout to auto-clear loading in case the fetch hangs
+      loadingTimeout = setTimeout(() => {
+        loadingContext?.updateLoading(false);
+        alert("Request timed out. Please try again.");
+      }, 20000);
+
+      // Send a POST request to the scrapper service to extract job info
+      const response = await fetch("http://localhost:3000/api/scrapper/fill", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${authContext.jwtToken}` },
+        body: JSON.stringify({ url }),
+      });
+
+      if (!response.ok) throw new Error("Failed to extract job info");
+
+      const { result } = await response.json();
+
+      // Debug log the result
+      console.log("Extracted result:", result);
+
+      // Reformat the skillsRequired field array into a comma-separated string
+      // Ex:ample: ["JavaScript", "React"] => "JavaScript, React"
+      const skillsRequired = Array.isArray(result.skillsRequired)
+        ? result.skillsRequired.join(", ")
+        : result.skillsRequired || "";
+
+      setFormData({
+        company: result.company || "",
+        position: result.position || "",
+        applicationUrl: result.applicationUrl || url,
+        deadline: result.deadline || "",
+        workLocation: result.workLocation || "Remote",
+        status: result.status || "Applied",
+        salary: {
+          min: result.salary?.min ?? 0,
+          max: result.salary?.max ?? 0,
+        },
+        skillsRequired,
+        jobDescription: result.jobDescription || "",
+        note: "",
+      });
+
+      loadingContext?.updateLoading(false);
+    } catch (error) {
+      console.error("Error extracting job info:", error);
+      alert("Failed to extract job info. Please try again.");
+    } finally {
+      // Clear the timeout and set loading to false
+      clearTimeout(loadingTimeout);
+      loadingContext?.updateLoading(false);
+    }
   };
 
   return (
     <div className="container mx-auto mt-32 mb-10 px-4">
+      <Loading isOpen={loadingContext?.loading ?? false} />
       <h1 className="text-2xl font-bold mb-4">Add New Application</h1>
 
       {/* URL Input Section */}

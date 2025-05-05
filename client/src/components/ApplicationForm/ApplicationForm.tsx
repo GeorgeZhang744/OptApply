@@ -38,7 +38,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({
             type="text"
             name="company"
             className="input input-bordered w-full"
-            value={formData.company}
+            value={formData.company ?? ""}
             onChange={handleInputChange}
             required
             disabled={!isEditable}
@@ -52,7 +52,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({
             type="text"
             name="position"
             className="input input-bordered w-full"
-            value={formData.position}
+            value={formData.position ?? ""}
             onChange={handleInputChange}
             required
             disabled={!isEditable}
@@ -84,7 +84,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({
             type="date"
             name="deadline"
             className="input input-bordered w-full"
-            value={formData.deadline}
+            value={formData.deadline ?? ""}
             onChange={handleInputChange}
             required
             disabled={!isEditable}
@@ -144,7 +144,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({
               name="salaryMin"
               placeholder="Min"
               className="input input-bordered w-full"
-              value={formData.salary.min}
+              value={formData.salary.min ?? ""}
               onChange={(e) => handleInputChange(e as any)}
               required
               disabled={!isEditable}
@@ -157,7 +157,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({
               name="salaryMax"
               placeholder="Max"
               className="input input-bordered w-full"
-              value={formData.salary.max}
+              value={formData.salary.max ?? ""}
               onChange={(e) => handleInputChange(e as any)}
               required
               disabled={!isEditable}
@@ -173,7 +173,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({
           type="text"
           name="skillsRequired"
           className="input input-bordered w-full"
-          value={formData.skillsRequired}
+          value={formData.skillsRequired ?? ""}
           onChange={handleInputChange}
           disabled={!isEditable}
         />
@@ -185,7 +185,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({
         <textarea
           name="jobDescription"
           className="textarea input-bordered w-full"
-          value={formData.jobDescription}
+          value={formData.jobDescription ?? ""}
           onChange={handleTextareaChange}
           rows={5}
           disabled={!isEditable}
@@ -198,7 +198,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({
         <textarea
           name="note"
           className="textarea input-bordered w-full"
-          value={formData.note}
+          value={formData.note ?? ""}
           onChange={handleTextareaChange}
           disabled={!isEditable}
         />

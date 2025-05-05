@@ -5,19 +5,27 @@ const router = Router();
 
 const PROXY_TARGET = "http://localhost:3003";
 
-router.get("/", (req, res, next) => {
-  req.url = "/calendar";
+router.post("/sync", (req, res, next) => {
+  // req.url = "/calendar/sync";
   createProxyMiddleware({
     target: PROXY_TARGET,
     changeOrigin: true,
+    pathRewrite: {
+      "^/sync": "/calendar/sync",
+    },
+    logger: console,
   })(req, res, next);
 });
 
-router.post("/sync", (req, res, next) => {
-  req.url = "/calendar/sync";
+router.get("/", (req, res, next) => {
+  // req.url = "/calendar";
   createProxyMiddleware({
     target: PROXY_TARGET,
     changeOrigin: true,
+    pathRewrite: {
+      "^/": "/calendar",
+    },
+    logger: console,
   })(req, res, next);
 });
 

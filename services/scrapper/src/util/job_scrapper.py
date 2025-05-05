@@ -63,26 +63,41 @@ def extract_main_content(html: str) -> str:
 # ----------------- Scrape HTML from URL ------------------
 async def fetch_html_content(url: str) -> str:
   """
-  Launches a headless Chromium browser using Playwright and retrieves full page HTML.
-  Stealth mode is applied to bypass simple bot detection.
+  Launches a headless Chromium browser using Playwright with stealth mode and realistic headers.
+  Intended to bypass basic bot protections like Cloudflare's interstitials.
   """
   async with async_playwright() as p:
-    # Launch browser in headless mode (without having a GUI for the browser opened)
-    browser = await p.chromium.launch()
-    context = await browser.new_context()
+    # Launch browser in headless mode with no-sandbox for Docker compatibility
+    browser = await p.chromium.launch(headless=True, args=["--no-sandbox"])
+
+    # Use a realistic user-agent and accept headers
+    context = await browser.new_context(
+      user_agent=(
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/122.0.0.0 Safari/537.36"
+      ),
+      locale="en-US",
+      viewport={"width": 1280, "height": 800}
+    )
+
     page = await context.new_page()
 
-    # Enable stealth to avoid bot detection
-    await stealth_async(page) 
+    # Apply stealth modifications to evade bot detection
+    await stealth_async(page)
 
-    # Go to the job page with the url given and set a 60s timeout
-    await page.goto(url, timeout=60000)
+    try:
+      # Navigate to the URL and wait until 'load' event
+      await page.goto(url, wait_until="load", timeout=60000)
 
-    # Wait for page and network to settle
-    await page.wait_for_load_state("networkidle")
+      # Give time for dynamic content (JS rendering) or challenges to clear
+      await page.wait_for_timeout(3000)
 
-    # Retrieve the html content on the job page
-    content = await page.content()
+      content = await page.content()
+
+    except Exception as e:
+      print(f"Error fetching HTML from {url}: {e}")
+      raise Exception("Failed to retrieve page content after retries.")
 
     await browser.close()
     return content
