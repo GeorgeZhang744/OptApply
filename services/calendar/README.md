@@ -19,7 +19,12 @@ DATABASE_URL=postgres://user:password@localhost:5432/optapply
 npm run dev
 ```
 
-### Run Dockerized
+### Build Docker Image
 ```bash
-docker compose up --build
+docker build -t calendar .
+```
+
+### Run Docker Image
+```bash
+docker run -p 3003:3003 calendar
 ```
