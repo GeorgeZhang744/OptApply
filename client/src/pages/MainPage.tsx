@@ -1,7 +1,7 @@
 import ToolBar from "../components/ToolBar/ToolBar";
 import ApplicationTable from "../components/ApplicationTable/ApplicationTable";
-import { useEffect, useState, useMemo, useCallback } from "react";
-import { mockApplications } from "../data/mockdata";
+import { useEffect, useState, useMemo, useCallback, useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 const MainPage = () => {
   const [applications, setApplications] = useState<models.application.IApplication[]>([]);
@@ -10,17 +10,38 @@ const MainPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   // State for a set that stores the application IDs of the applications that are selected
   const [selectedApplications, setSelectedApplications] = useState<Set<string>>(new Set());
+  const authContext = useContext(AuthContext);
 
   useEffect(() => {
-    const fetchApplication = async () => {
-      setTimeout(() => {
-        setApplications(mockApplications);
-        setLoading(false);
-      }, 500);
-    };
+  const fetchApplications = async () => {
+    console.log("Token in MainPage:", authContext?.jwtToken);
+    if (!authContext?.jwtToken) return;
 
-    fetchApplication();
-  }, []);
+    try {
+      const response = await fetch("http://localhost:3000/api/applications", {
+        headers: {
+          Authorization: `Bearer ${authContext.jwtToken}`,
+        },
+      });
+console.log("RAW response:", response); // ADD THIS
+
+const text = await response.text();      // Try reading as text first
+console.log("RESPONSE BODY:", text);     // ADD THIS
+
+if (!response.ok) throw new Error("Failed to fetch applications");
+
+const data = JSON.parse(text);           // Then parse it manually
+      setApplications(data);
+    } catch (error) {
+      console.error("Error fetching applications:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchApplications();
+}, [authContext?.jwtToken]);
+
 
   // Prevents function recreation because it is passed to a child component
   const toggleApplicationSelection = useCallback((applicationId: string) => {

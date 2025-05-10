@@ -1,0 +1,17 @@
+FROM node:18
+
+#setup working directory
+WORKDIR /app
+
+#copy package.json and lock file
+COPY package.json ./
+RUN npm install
+
+#copy rest of app
+COPY . .
+
+#expose port for app
+EXPOSE 3002
+
+#start the app
+CMD ["npm", "run", "dev"]

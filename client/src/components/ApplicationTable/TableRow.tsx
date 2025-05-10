@@ -38,7 +38,11 @@ const TableRow: React.FC<ITableRowProps> = ({ application, isChecked, toggleSele
           {application.applicationUrl}
         </a>
       </td>
-      <td className="p-3">{application.deadline.toLocaleDateString()}</td>
+      <td className="p-3">
+        {application.deadline
+        ? new Date(application.deadline).toLocaleDateString()
+        : "N/A"}
+        </td>
       <td className="p-3 hidden sm:table-cell">{application.workLocation}</td>
       <td className="p-3 hidden sm:table-cell">{application.status}</td>
     </tr>

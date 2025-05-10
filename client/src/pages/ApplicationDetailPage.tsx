@@ -1,25 +1,35 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams, Link } from "react-router";
-import { mockApplications } from "../data/mockdata";
+import { AuthContext } from "../contexts/AuthContext";
 import JobCard from "../components/JobCard/JobCard";
 
 const ApplicationDetailPage = () => {
   const { applicationId } = useParams();
+  const authContext = useContext(AuthContext);
   const [application, setApplication] = useState<models.application.IApplication | null>(null);
-
-  const foundApplication = useMemo(
-    () => mockApplications.find((application) => application.id === applicationId) || null,
-    [applicationId]
-  );
 
   useEffect(() => {
     const fetchApplication = async () => {
-      //simulate API call delay
-      setTimeout(() => setApplication(foundApplication), 500);
+      if(!authContext?.jwtToken || !applicationId) return;
+      
+      try{
+        const response = await fetch(`http://localhost:3000/api/applications/${applicationId}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${authContext.jwtToken}`,
+          },
+        });
+        if(!response.ok) throw new Error("Failed to fetch application");
+
+        const data = await response.json();
+        setApplication(data);
+      } catch (err){
+        console.error("error fetching application", err);
+      }
     };
 
     fetchApplication();
-  }, [foundApplication]);
+  }, [authContext?.jwtToken, applicationId]);
 
   return (
     <div className="container w-full mx-auto mt-24 px-4">

@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ApplicationForm from "../components/ApplicationForm/ApplicationForm";
 import Loading from "../components/Loading/Loading";
 import { LoadingContext } from "../contexts/LoadingContext";
@@ -8,6 +8,7 @@ import { AuthContext } from "../contexts/AuthContext";
 const AddApplicationPage = () => {
   const loadingContext = useContext(LoadingContext);
   const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [url, setUrl] = useState("");
 
@@ -63,6 +64,40 @@ const AddApplicationPage = () => {
     const { name, value } = event.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   }, []);
+
+const handleSubmit = async () => {
+  if (!authContext?.jwtToken) {
+    alert("You must be logged in.");
+    return;
+  }
+
+  try {
+    console.log("🔑 Token being sent:", authContext?.jwtToken);
+
+    const response = await fetch("http://localhost:3000/api/applications", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authContext?.jwtToken}`,
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Server responded with:", response.status, data);
+      throw new Error("Failed to create application");
+    }
+
+    alert("Application created successfully!");
+
+    navigate("/home");
+  } catch (error) {
+    console.error("Error creating application:", error);
+    alert("There was an error submitting your application.");
+  }
+};
 
   const handleExtractInfo = async () => {
     // Validate URL format (basic validation) and make sure user is logged in (jwtToken is available)
@@ -161,7 +196,7 @@ const AddApplicationPage = () => {
         <Link to="/home" className="btn btn-secondary">
           Cancel
         </Link>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
           Submit
         </button>
       </div>
