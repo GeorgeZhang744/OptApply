@@ -10,9 +10,9 @@ router.get("/", getAllApplications);
 router.post("/", createApplication);
 
 //PUT
-router.put("/:id", updateApplication);
+router.put("/:application_id", updateApplication);
 
 //DELETE
-router.delete("/:id",deleteApplication);
+router.delete("/:application_id",deleteApplication);
 
 export default router;

@@ -1,38 +1,16 @@
-# Application Service
+### Setup Instructions
 
-Handling CRUD operations for job apps in the system
-
----
-
-### Important Notes
-Make sure to run in OptApply/services/applications" folder
-
-Ensure Docker is running and the .env file is setup in ./services/applications:
-
-```env
-DATABASE_URL=postgres://user:password@localhost:5432/optapply
+## Important Note: Follow steps in /services/auth/README.md first
+## After following steps in auth README.md:
+cd into application service and run
 ```
-
----
-
-### 1. install dependencies and run server
-```bash
 npm install
-npm run dev
 ```
 
-### 2. Run docker service
-```bash
-docker compose up --build
+# Setup applications table in same local db
+Under the same local postgres db, create an application table:
 ```
-
-### 3a. To create the PostgreSQL table (only required for first time)
-```bash
-docker exec -it optapply-db psql -U user -d optapply
-```
-### 3b. Then run the following SQL:
-```sql
-CREATE TABLE applications (
+CREATE TABLE IF NOT EXISTS applications (
   id SERIAL PRIMARY KEY,
   user_id TEXT NOT NULL,
   company TEXT NOT NULL,
@@ -49,4 +27,19 @@ CREATE TABLE applications (
   note TEXT
 );
 ```
-# Application service will be running at http://localhost:3100/applications
+
+# Create env file in /services/applications/
+in the application service folder, create a .env file:
+```
+DATABASE_URL=postgresql://<username>:<password>@<host>:<port>/<database>
+```
+
+# Testing signing up, logging in, adding application, viewing applications
+Run the gateway, auth service, application service, the client, and the db.
+sign up with an email and password
+check db to see newly made account
+add an application
+application should be visible and listed
+logout, log back in, application should still be there
+
+***NOTE*** implementation is not fully complete, currently only adding and viewing the applications are working, and refreshing the page breaks the service as the JWT is not being saved upon refresh.

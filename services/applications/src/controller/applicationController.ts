@@ -1,16 +1,12 @@
 import {Request, Response} from "express";
 import db from "../db";
+import { validateToken } from "../utils/validateToken";
 
 //GET retrieve all applications of a user
 export const getAllApplications = async (req: Request, res:Response): Promise<void> => {
-  const {userId} = req.query;
-
-  if (!userId){
-    res.status(400).json({error: "missing userId"});
-    return;
-  } 
-
   try{
+    const {userId} = await validateToken(req);
+
     const result = await db.query("SELECT * FROM applications WHERE user_id = $1", [userId]);
     res.json(result.rows);
   }catch (err){
@@ -21,8 +17,10 @@ export const getAllApplications = async (req: Request, res:Response): Promise<vo
 
  //POST create new application
  export const createApplication = async (req: Request, res: Response) => {
-  const {
-    user_id,
+  try{
+    const {userId} = await validateToken(req);
+
+    const {
     company,
     position,
     status,
@@ -37,24 +35,25 @@ export const getAllApplications = async (req: Request, res:Response): Promise<vo
     note,
   } = req.body;
 
-  try{
+    console.log("Creating application for user:", userId);
     const result = await db.query(
       `INSERT INTO applications
       (user_id, company, position, status, application_url, deadline, work_location, min, max, fixed, job_description, skills, note)
       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING *`,
-      [user_id, company, position, status, application_url, deadline, work_location, min, max, fixed, job_description, skills, note]
+      [userId, company, position, status, application_url, deadline, work_location, min, max, fixed, job_description, skills, note]
     );
     res.status(201).json(result.rows[0]);
-  }catch (err){
-    console.error("error creating application:", err);
-    res.status(500).json({error: "failed to create application"});
+  }catch (err:any){
+    res.status(500).json({ error: err.message || "failed to create application" });
   }
  };
 
  //PUT updates application
  export const updateApplication = async(req: Request, res:Response): Promise<void> => {
-  const {id} = req.params;
-  const {
+  try{
+    const {userId} = await validateToken(req);
+    const {application_id} = req.params;
+    const {
     company,
     position,
     status,
@@ -69,7 +68,7 @@ export const getAllApplications = async (req: Request, res:Response): Promise<vo
     note,
   } = req.body;
 
-  try{
+    
     const result = await db.query(
       `UPDATE applications SET
         company = $1,
@@ -84,9 +83,9 @@ export const getAllApplications = async (req: Request, res:Response): Promise<vo
         job_description = $10,
         skills = $11,
         note = $12
-      WHERE id = $13
+      WHERE id = $13 AND user_id = $14
       RETURNING *`,
-      [company, position, status, application_url, deadline, work_location, min, max, fixed, job_description, skills, note, id]
+      [company, position, status, application_url, deadline, work_location, min, max, fixed, job_description, skills, note, application_id, userId]
     );
 
     if(result.rowCount === 0){
@@ -103,14 +102,15 @@ export const getAllApplications = async (req: Request, res:Response): Promise<vo
 
  //DELETE deletes application
  export const deleteApplication = async (req:Request, res:Response): Promise<void> => {
-  const {id} = req.params;
-
   try{
+    const {userId} = await validateToken(req);
+    const {application_id} = req.params;
+
     const result = await db.query(
       `DELETE FROM applications
-      WHERE id = $1
+      WHERE id = $1 AND user_id = $2
       RETURNING *`,
-      [id]
+      [application_id, userId]
     );
 
     if(result.rowCount === 0){

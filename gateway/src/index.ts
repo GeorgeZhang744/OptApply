@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 
 app.use("/api/auth", authRoutes);
-app.use("/api/application", applicationRoutes);
+app.use("/api/applications", applicationRoutes);
 app.use("/api/calendar", calendarRoutes);
 app.use("/api/scrapper", scrapperRoutes);
 

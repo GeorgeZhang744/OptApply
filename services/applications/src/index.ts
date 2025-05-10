@@ -8,11 +8,16 @@ const PORT = process.env.PORT || 3002;
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (_req, res) => {
-  res.send("Service is running!");
+app.use((req, res, next) => {
+  console.log(`[${req.method}] ${req.url}`);
+  next();
 });
 
-app.use("/applications",applicationRoutes);
+/*app.get("/", (_req, res) => {
+  res.send("Service is running!");
+});*/
+
+app.use("/",applicationRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
