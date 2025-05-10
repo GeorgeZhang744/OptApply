@@ -5,9 +5,9 @@ import { validateTokenMiddleware } from "../controller/validate";
 const router = express.Router();
 
 //GET
-router.get("/sync", validateTokenMiddleware, getCalendarDeadlines);
+router.get("/sync", validateTokenMiddleware, syncCalendarDeadlines);
 
 //POST
-router.post("/", validateTokenMiddleware, syncCalendarDeadlines);
+router.post("/", validateTokenMiddleware, getCalendarDeadlines);
 
 export default router;
