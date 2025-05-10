@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ApplicationForm from "../components/ApplicationForm/ApplicationForm";
 import Loading from "../components/Loading/Loading";
 import { LoadingContext } from "../contexts/LoadingContext";
@@ -8,6 +8,7 @@ import { AuthContext } from "../contexts/AuthContext";
 const AddApplicationPage = () => {
   const loadingContext = useContext(LoadingContext);
   const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [url, setUrl] = useState("");
 
@@ -90,6 +91,8 @@ const handleSubmit = async () => {
     }
 
     alert("Application created successfully!");
+
+    navigate("/home");
   } catch (error) {
     console.error("Error creating application:", error);
     alert("There was an error submitting your application.");
